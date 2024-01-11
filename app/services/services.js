@@ -12,7 +12,7 @@ const searchMovieByTitle = async (title) => {
     console.log('Movie Title:', data.Title);
     console.log('Year:', data.Year);
     console.log('Genre:', data.Genre);
-    // Add more properties as needed
+    // get properties as needed
   } else {
     console.error('Movie not found!');
   }
@@ -43,15 +43,8 @@ const getMovieDetails = async (imdbID) => {
     console.log('Movie Title:', data.Title);
     console.log('Year:', data.Year);
     console.log('Genre:', data.Genre);
-    // Add more properties as needed
+    // get properties as needed
   } else {
     console.error('Movie details not found!');
   }
 };
-
-// Example usage
-searchMovie('The Shawshank Redemption');
-console.log('---');
-getAllMovies();
-console.log('---');
-getMovieDetails('tt0111161');
