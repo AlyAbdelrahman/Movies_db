@@ -1,7 +1,10 @@
-import { createStore } from 'redux';
 import moviesReducer from './reducers/moviesReducer';
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-// Create Store
-const store = createStore(moviesReducer);
 
+const store = createStore(
+  moviesReducer,
+composeWithDevTools()
+)
 export default store;
