@@ -3,7 +3,7 @@ import React from 'react';
 import moviesSlice, { updateSearchResults } from '@/provider/reducers/movieReducer';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import './search.css'
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -101,14 +101,17 @@ const Search = () => {
   };
 
   return (
-    <div>
+    <div className="navbar">
       <input
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Enter search term"
+        className="search-input"
       />
-      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleSearch} className="search-button">
+        Search
+      </button>
     </div>
   );
 };
