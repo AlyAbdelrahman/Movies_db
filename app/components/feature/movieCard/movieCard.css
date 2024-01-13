@@ -1,0 +1,65 @@
+/* Add this to your stylesheet or in your React component as a style object */
+
+.movie-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    transition: transform 0.3s ease-in-out;
+    width: 250px; /* Set your preferred width */
+    height: 400px; /* Set your preferred height */
+    cursor: pointer;
+  
+    &:hover {
+      transform: scale(1.05);
+    }
+  
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: inherit;
+      filter: blur(0); /* Initial blur set to 0 */
+      transition: filter 0.3s ease-in-out;
+      z-index: -1;
+    }
+  
+    &:hover:before {
+      filter: blur(5px); /* Adjust the blur amount on hover */
+    }
+  }
+  
+  .movie-poster {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+  }
+  
+  .movie-details {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    color: #fff; /* Text color on the blurred background */
+    z-index: 1;
+  }
+  
+  .movie-card:hover .movie-details {
+    opacity: 1;
+  }
+  
+  .movie-card:hover .movie-poster {
+    filter: blur(5px); /* Apply blur to the image on hover */
+  }
+  

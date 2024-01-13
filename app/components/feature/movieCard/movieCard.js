@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import './movieCard.css'
 const MovieCard = ({ movieData }) => {
     if (movieData) {
       const { Title, Year, imdbID, Type, Poster } = movieData;
