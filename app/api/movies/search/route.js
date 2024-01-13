@@ -31,8 +31,11 @@ const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
 import { NextResponse } from 'next/server'
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
-  const searchTerm = searchParams.get('searchTerm')
-  const url = `${apiUrl}?apikey=${apiKey}&s=${searchTerm}`;
+  const searchTerm = searchParams.get('searchTerm');
+  const selectedCategory = searchParams.get('type');
+  const seasonNumber = searchParams.get('Season');
+  const episodeNumber = searchParams.get('Episode');
+  const url = `${apiUrl}?apikey=${apiKey}&s=${searchTerm}&type=${selectedCategory}&Season=${seasonNumber}&Episode=${episodeNumber}`;
 
   const res = await fetch(url, {
     headers: {
