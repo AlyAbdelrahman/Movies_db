@@ -1,18 +1,28 @@
+import 'dotenv/config'
+const apiKey = process.env.NEXT_PUBLIC_OMDB_API_KEY;
+const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
 
-const apiKey = process.env.OMDB_API_KEY;
-const apiUrl = process.env.BASE_API_URL;
 
-
-const searchMovieByTitle = async (title) => {
+export const fetchData = async (url) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(`Error fetching data: ${error.message}`);
+    }
+  };
+export const searchMovieByTitle = async (title) => {
   const encodedTitle = encodeURIComponent(title);
-  const url = `${apiUrl}?apikey=${apiKey}&t=${encodedTitle}`;
+  const url = `${apiUrl}?apikey=${apiKey}&s=${encodedTitle}`;
   const data = await fetchData(url);
 
   if (data && data.Response === 'True') {
-    console.log('Movie Title:', data.Title);
-    console.log('Year:', data.Year);
-    console.log('Genre:', data.Genre);
-    // get properties as needed
+    return data;
   } else {
     console.error('Movie not found!');
   }
@@ -35,16 +45,12 @@ const getAllMovies = async () => {
   }
 };
 
-const getMovieDetails = async (imdbID) => {
-  const url = `${apiUrl}?apikey=${apiKey}&i=${imdbID}`;
-  const data = await fetchData(url);
+export const getMovieDetails = async (imdbID) => {
+    
+const response = await fetch(`http://localhost:3000/api/movieDetails/${encodeURIComponent(imdbID)}`,{method:'GET'});
 
-  if (data && data.Response === 'True') {
-    console.log('Movie Title:', data.Title);
-    console.log('Year:', data.Year);
-    console.log('Genre:', data.Genre);
-    // get properties as needed
-  } else {
-    console.error('Movie details not found!');
-  }
+  if (!response.ok) {
+    throw new Error('something went wrong')
+} 
+return response.json();
 };
