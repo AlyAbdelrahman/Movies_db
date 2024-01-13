@@ -1,20 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import MovieCard from '../movieCard/movieCard';
+import MovieCard from '../movieCard/MovieCard';
 
 
 const SearchResults = ({searchResults}) => {
+  console.log('>>searchResults',searchResults)
   return (
-    <div>
-      {/* Render your search results here */}
-      <ul>
-        {searchResults.map((result, index) => (
-          <li key={index}>
-            <MovieCard movieData={result} key={result.imdbID}/>
-            {/* <strong>{result.Title}</strong> - {result.Year} */}
-          </li>
-        ))}
-      </ul>
+    <div className="grid p-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {searchResults.map((result, index) => (
+        <div key={index}>
+          <MovieCard movieData={result} key={result.imdbID} />
+        </div>
+      ))}
     </div>
   );
 };
