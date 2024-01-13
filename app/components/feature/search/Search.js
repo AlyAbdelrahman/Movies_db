@@ -1,8 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { updateSearchResults } from '@/provider/reducers/movieReducer';
 import { useDispatch } from 'react-redux';
 import InputField from '../../common/InputField';
+import { videoCategory } from '@/app/utils/constants';
+import Chip from '../../common/Chip';
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -13,6 +15,8 @@ const Search = () => {
   const [searchError, setSearchError] = useState('');
   const [seasonError, setSeasonError] = useState('');
   const [episodeError, setEpisodeError] = useState('');
+
+  const [selectedCategory, setSelectedCategory] = useState('movie');
 
   const handleSearch = async () => {
     // Reset previous errors
@@ -34,26 +38,27 @@ const Search = () => {
     try {
       const apiEndpoint = `${process.env.NEXT_PUBLIC_BASE_ENV_API_URL}/movies/search`;
 
-      const response = await fetch(`${apiEndpoint}?searchTerm=${encodeURIComponent(searchTerm)}&season=${seasonNumber}&episode=${episodeNumber}`, { method: 'GET' });
+      const response = await fetch(`${apiEndpoint}?searchTerm=${encodeURIComponent(searchTerm)}&type=${selectedCategory}&season=${seasonNumber}&episode=${episodeNumber}`, { method: 'GET' });
       const searchData = await response.json();
-
-      if (searchData.Search.length > 0) {
-        dispatch(updateSearchResults({ term: searchTerm, results: searchData || [], searchCategory: 'movie' }));
+      if (searchData.Response !== 'False' && searchData.Search.length > 0) {
+        dispatch(updateSearchResults({ term: searchTerm, results: searchData || [], searchCategory: selectedCategory }));
       } else {
-        // Handle not found scenario 
+        dispatch(updateSearchResults({ term: searchTerm, results: [] || [], searchCategory: selectedCategory }));
         console.error('Data not found!');
       }
     } catch (error) {
-      // Handle error scenario 
       console.error('Error fetching data:', error.message);
     }
   };
 
+  const handleChipClick = (category) => {
+    setSelectedCategory(category);
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center xl:h-28 md:h-32 sm:h-screen-96 bg-gray-900 text-white rounded-t-sm md:relative">
+    <div className="flex flex-col items-center justify-center  md:h-48 pb-3 sm:h-screen-96 bg-gray-900 text-white rounded-t-sm md:relative">
       <div className="w-full px-4 sm:py-6 md:px-8 flex flex-col md:flex-row items-center">
-        
+
         <InputField
           placeholder="Search for Movie or Series"
           value={searchTerm}
@@ -61,21 +66,26 @@ const Search = () => {
           errorMessage={searchError}
           className="mb-2 md:mb-2 md:mr-2 md:flex-grow"
         />
-        <InputField
-          placeholder="Season Number"
-          value={seasonNumber}
-          onChange={(e) => setSeasonNumber(e.target.value)}
-          errorMessage={seasonError}
-          className="mb-2 md:mb-0 md:mr-2"
-        />
-        <InputField
-          placeholder="Episode Number"
-          value={episodeNumber}
-          onChange={(e) => setEpisodeNumber(e.target.value)}
-          errorMessage={episodeError}
-          className="mb-2 md:mb-0 md:mr-2 "
-        />
-        <button
+        {selectedCategory === 'series' && (
+          <Fragment>
+            <InputField
+              placeholder="Season Number"
+              value={seasonNumber}
+              onChange={(e) => setSeasonNumber(e.target.value)}
+              errorMessage={seasonError}
+              className={`mb-2 md:mb-0 md:mr-2 ${seasonNumber ? 'block' : 'hidden'}`}
+            />
+            <InputField
+              placeholder="Episode Number"
+              value={episodeNumber}
+              onChange={(e) => setEpisodeNumber(e.target.value)}
+              errorMessage={episodeError}
+              className={`mb-2 md:mb-0 md:mr-2 ${episodeNumber ? 'block' : 'hidden'}`}
+            />
+          </Fragment>
+          
+        )}
+          <button
           onClick={handleSearch}
           className="bg-red-500 text-white border-none px-4 h-full rounded focus:outline-none transition-all duration-300 hover:bg-red-600"
         >
@@ -94,6 +104,12 @@ const Search = () => {
           </svg>
         </button>
       </div>
+        <div className="flex my-2">
+          {videoCategory.map((category) => (
+            <Chip key={category} category={category} selectedCategory={selectedCategory} handleOnClick={() => handleChipClick(category)} />
+          ))}
+        </div>
+      
     </div>
   );
 };
