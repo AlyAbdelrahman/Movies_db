@@ -14,7 +14,6 @@ const Search = () => {
 
   const [searchError, setSearchError] = useState('');
   const [seasonError, setSeasonError] = useState('');
-  const [episodeError, setEpisodeError] = useState('');
 
   const [selectedCategory, setSelectedCategory] = useState('movie');
 
@@ -22,7 +21,6 @@ const Search = () => {
     // Reset previous errors
     setSearchError('');
     setSeasonError('');
-    setEpisodeError('');
 
     if (searchTerm.trim().length === 0) {
       setSearchError('Movie or Series name is required.');
@@ -30,7 +28,7 @@ const Search = () => {
     }
 
     // Validate search criteria
-    if (episodeNumber.trim().length > 0 && seasonNumber.trim().length === 0) {
+    if ((episodeNumber.trim().length > 0 && seasonNumber.trim().length === 0) && selectedCategory !== 'movie' ) {
       setSeasonError('Season number is required for searching episodes.');
       return;
     }
@@ -65,6 +63,7 @@ const Search = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           errorMessage={searchError}
           className="mb-2 md:mb-2 md:mr-2 md:flex-grow"
+          type="text"
         />
         {selectedCategory === 'series' && (
           <Fragment>
@@ -74,13 +73,14 @@ const Search = () => {
               onChange={(e) => setSeasonNumber(e.target.value)}
               errorMessage={seasonError}
               className={`mb-2 md:mb-0 md:mr-2 ${seasonNumber ? 'block' : 'hidden'}`}
+              type="Number"
             />
             <InputField
               placeholder="Episode Number"
               value={episodeNumber}
               onChange={(e) => setEpisodeNumber(e.target.value)}
-              errorMessage={episodeError}
               className={`mb-2 md:mb-0 md:mr-2 ${episodeNumber ? 'block' : 'hidden'}`}
+              type="Number"
             />
           </Fragment>
           
