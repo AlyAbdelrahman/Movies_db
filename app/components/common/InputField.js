@@ -1,13 +1,14 @@
 'use client'
 import React, { useState } from 'react';
 
-const InputField = ({ placeholder, value, onChange, errorMessage }) => {
+const InputField = ({ placeholder, value, onChange, errorMessage, type }) => {
   const [focused, setFocused] = useState(false);
 
   return (
     <div className="relative flex-grow mr-2 md:mb-0 sm:mb-7 sm:w-full">
       <input
-        type="text"
+        type={type}
+        min={type === 'Number' ? 1 : undefined}
         value={value}
         onChange={onChange}
         onFocus={() => setFocused(true)}
