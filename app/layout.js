@@ -2,6 +2,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import ReduxProvider from '@/provider/redux/ReduxProvider'
 import Header from './components/layout/Header'
+import GoogleLogin from './components/feature/signIn/GoogleLogin'
+import Account from './components/feature/account/Account'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +18,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className="bg-black ">
           <div className="grid grid-cols-12 md:grid-cols-12  h-lvh">
+
             {/* Left Menu */}
             <div className="bg-gray-800 p-4 col-span-2 ">
               <p className="text-xl font-bold">Left Menu</p>
@@ -28,7 +31,7 @@ export default function RootLayout({ children }) {
             </div>
             {/* Right Menu */}
             <div className="bg-gray-800 p-4 col-span-2">
-              <p className="text-xl font-bold">Right Menu</p>
+              <Account/>
               {/* Add your right menu content here */}
             </div>
           </div>
