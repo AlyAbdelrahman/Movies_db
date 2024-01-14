@@ -1,27 +1,19 @@
-import { auth, firestore, googleAuthProvider, signInWithPopup, } from '@/firebase';
+import { auth, firestore, googleAuthProvider, signInWithPopup } from '@/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 
 const GoogleLogin = () => {
     const {userData} = useSelector(state => state.user);
-    console.log('.........',userData)
   const signInWithGoogle = async () => {
     try {
-        // Sign in with Google
         const result = await signInWithPopup(auth, googleAuthProvider);
-      
-        // Access the user data
         const userData = result.user;
-      
-        // Check if the user document exists
         const userDocRef = doc(firestore, 'users', userData.uid);
         const userDocSnapshot = await getDoc(userDocRef);
       
-        // If the document doesn't exist, create it
         if (!userDocSnapshot.exists()) {
           await setDoc(userDocRef, {
             watchlist: [],
-            // other user data if needed
           });
         }
       } catch (error) {

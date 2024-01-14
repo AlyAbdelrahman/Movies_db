@@ -2,13 +2,17 @@
 import { useEffect, useState } from 'react';
 import { auth } from '@/firebase';
 import GoogleLogin from '../signIn/GoogleLogin';
+import { useDispatch } from 'react-redux';
+import { updateUserData } from '@/provider/reducers/userReducer';
+
 
 const Account = () => {
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
+    dispatch(updateUserData({ user: user}));
     });
 
     return () => unsubscribe();
@@ -16,7 +20,7 @@ const Account = () => {
 
   return (
     <div>
-      <GoogleLogin user={user} />
+      <GoogleLogin />
     </div>
   );
 };
