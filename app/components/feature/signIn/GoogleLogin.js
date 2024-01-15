@@ -30,15 +30,15 @@ const GoogleLogin = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto my-8 p-6 bg-white rounded-md shadow-md">
+    <div className="max-w-md mx-auto mb-8 p-6 bg-gray-900 rounded-md shadow-md">
     {userData ? (
-      <div>
+      <div className='flex flex-col'>
         <img
           className="mx-auto h-16 w-16 rounded-full mb-4"
           src={userData.photoURL}
           alt="User Profile"
         />
-        <p className="text-center text-xl font-semibold mb-2">{userData.displayName}</p>
+        <p className="text-white text-center text-xl font-semibold mb-2">{userData.displayName}</p>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={signOut}
