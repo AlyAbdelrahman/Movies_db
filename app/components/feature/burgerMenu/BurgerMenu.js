@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import Link from 'next/link'
+import Account from '../account/Account';
 
 
 const activeSide = "bg-gray-800 h-full w-60 transform transition-all fixed duration-700 text-white  justify-center p-2 z-10";
@@ -12,7 +13,7 @@ const BurgerMenu = () => {
     const [isActive, setIsActive] = useState(false);
 
     return (
-        <div class="col-span-1 relative sm:block  md:hidden  lg:hidden ">
+        <div className="col-span-1 relative sm:block  md:hidden  lg:hidden ">
             <div className=" h-full w-full  transform relative transition-all duration-1000 z-10 ">
                 <div className={isActive ? activeSide : hiddenSide}>
                     <svg
@@ -30,6 +31,9 @@ const BurgerMenu = () => {
                         ></path>
                     </svg>
                     <p className="text-xl font-bold text-white mb-2">Movies Theater</p>
+                    <div className="sm:block md:block lg:hidden">
+                        <Account />
+                    </div>
                     <Link href="/" className="flex items-center text-white hover:underline">
                         <svg
                             className="w-6 h-6 mr-2"
