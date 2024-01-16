@@ -1,10 +1,17 @@
 import React from 'react';
 import { getMovieDetails } from '@/app/services/services';
+import AddToWatchList from '@/app/components/feature/addTowatchList/AddToWatchList';
+import EmptyResults from '@/app/components/feature/emptyResults/EmptyResulst';
 
 const MovieDetails = async ({params}) => {
     const { id } = params;
-    console.log(params.id)
-    const movieData = await getMovieDetails(id);
+    let movieData;
+    try {
+         movieData = await getMovieDetails(id);
+        console.log('Movie details:', movieData);
+    } catch (error) {
+        console.error('Error fetching movie details:', error.message);
+    }
     const { Title, Plot, Released, imdbRating, Actors, Director, Writer, Poster } = movieData;
 
   if (movieData?.Title) {
@@ -26,12 +33,12 @@ const MovieDetails = async ({params}) => {
           <p><strong>Rating:</strong> {imdbRating}</p>
           <p><strong>Cast:</strong> {Actors}</p>
           <p><strong>Crew:</strong> {Director}, {Writer}</p>
+          <AddToWatchList movieData={movieData}/>
         </div>
       </div>
     );
-  } else {
-    // Handle loading state more gracefully, e.g., show a spinner
-    return <div>Loading...</div>;
+  }else{
+    <EmptyResults/>
   }
 };
 
