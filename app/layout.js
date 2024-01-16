@@ -2,14 +2,17 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import ReduxProvider from '@/provider/redux/ReduxProvider'
 import Header from './components/layout/Header'
-import GoogleLogin from './components/feature/signIn/GoogleLogin'
 import Account from './components/feature/account/Account'
-import WatchList from './components/feature/watchlist/Watchlist'
 import Link from 'next/link'
-import BurgerMenu from './components/feature/burgerMenu/BurgerMenu'
-
+import Spinner from './components/shared/spinner'
+import dynamic from 'next/dynamic'
 const inter = Inter({ subsets: ['latin'] })
-
+const BurgerMenu = dynamic(() => import('./components/feature/burgerMenu/BurgerMenu'), {
+  loading: () => <Spinner/> 
+});
+const WatchList = dynamic(() => import('./components/feature/watchlist/Watchlist'), {
+  loading: () => <Spinner/> 
+});
 export const metadata = {
   title: 'Movies theater',
   description: 'Web App for searching throw movies',
