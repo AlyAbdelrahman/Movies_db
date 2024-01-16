@@ -1,10 +1,11 @@
 'use client';
 import React, { Fragment, useState } from 'react';
 import { updateSearchResults } from '@/provider/reducers/movieReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import InputField from '../../common/InputField';
 import { videoCategory } from '@/app/utils/constants';
 import Chip from '../../common/Chip';
+import { useRouter } from 'next/navigation';
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -16,8 +17,16 @@ const Search = () => {
   const [seasonError, setSeasonError] = useState('');
 
   const [selectedCategory, setSelectedCategory] = useState('movie');
-
+  const { currentSearchTerm } = useSelector(state => state.movies);
+  const router = useRouter();
+  
   const handleSearch = async () => {
+    dispatch((prev) => updateSearchResults({ ...prev, isLoading: true }));
+
+    if (router.pathname !== '/dashboard') {
+     await router.push('/dashboard')
+    }
+    if (currentSearchTerm === searchTerm) return;
     // Reset previous errors
     setSearchError('');
     setSeasonError('');
@@ -32,6 +41,7 @@ const Search = () => {
       setSeasonError('Season number is required for searching episodes.');
       return;
     }
+    dispatch(updateSearchResults({ term: searchTerm, results: [] , searchCategory: selectedCategory, isLoading: true }));
 
     try {
       const apiEndpoint = `${process.env.NEXT_PUBLIC_BASE_ENV_API_URL}/movies/search`;
@@ -39,9 +49,9 @@ const Search = () => {
       const response = await fetch(`${apiEndpoint}?searchTerm=${encodeURIComponent(searchTerm)}&type=${selectedCategory}&season=${seasonNumber}&episode=${episodeNumber}`, { method: 'GET' });
       const searchData = await response.json();
       if (searchData.Response !== 'False' && searchData.Search.length > 0) {
-        dispatch(updateSearchResults({ term: searchTerm, results: searchData || [], searchCategory: selectedCategory }));
+        dispatch(updateSearchResults({ term: searchTerm, results: searchData || [], searchCategory: selectedCategory, isLoading: false }));
       } else {
-        dispatch(updateSearchResults({ term: searchTerm, results: [] || [], searchCategory: selectedCategory }));
+        dispatch(updateSearchResults({ term: searchTerm, results: [] || [], searchCategory: selectedCategory, isLoading: false }));
         console.error('Data not found!');
       }
     } catch (error) {
