@@ -31,7 +31,7 @@ export const searchMovieByTitle = async (title) => {
 
 export const getMovieDetails = async (imdbID) => {
     
-    const response = await fetch(`http://localhost:3000/api/movieDetails/${encodeURIComponent(imdbID)}`,{method:'GET'});
+    const response = await fetch(`${apiUrl}/movieDetails/${encodeURIComponent(imdbID)}`,{method:'GET'});
     
       if (!response.ok) {
         throw new Error('something went wrong')
