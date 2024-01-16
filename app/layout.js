@@ -32,9 +32,9 @@ export default function RootLayout({ children }) {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M6 3h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2zM15 8a1 1 0 100-2 1 1 0 000 2zm-2 8a2 2 0 100-4 2 2 0 000 4z"
                 ></path>
               </svg>
@@ -49,9 +49,9 @@ export default function RootLayout({ children }) {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M5 12h14M12 5l7 7-7 7"
                   ></path>
                 </svg>
