@@ -5,16 +5,30 @@ import Account from '../account/Account';
 
 
 const activeSide = "bg-gray-800 h-full w-60 transform transition-all fixed duration-700 text-white  justify-center p-2 z-10";
-const hiddenSide = "bg-gray-800 h-full w-60 transform transition-all fixed duration-700 text-white  justify-center p-2 -translate-x-60";
-const activeButton = "absolute w-full  h-full bg-red-900 top-0 cursor-pointer transition-all transform duration-700 flex items-center justify-center z-10";
-const normalButton = "absolute w-full  h-full bg-red-900 top-0 cursor-pointer transition-all transform duration-700 flex items-center justify-center translate-x-60 z-10";
+const hiddenSide = "bg-gray-800 h-full w-60 transform transition-all fixed duration-700 text-white  justify-center p-2 -translate-x-60 z-10";
+const activeButton = "fixed w-16  h-full bg-red-900 top-0 cursor-pointer transition-all transform duration-700 flex items-center justify-center z-10";
+const normalButton = "fixed w-16  h-full bg-red-900 top-0 cursor-pointer transition-all transform duration-700 flex items-center justify-center translate-x-60 z-10";
 
 const BurgerMenu = () => {
     const [isActive, setIsActive] = useState(false);
+    const [isMenuClosed, setIsMenuClosed] = useState(true);
+    const handleToggle = () =>{
+        setIsActive(!isActive)
+        if(isMenuClosed ){
+            setIsMenuClosed(false)
+            
+        }else{
+            setTimeout(() => {
+            setIsMenuClosed(true)
+
+            }, 1000);
+        }
+    }
 
     return (
         <div className="col-span-1 relative sm:block  md:hidden  lg:hidden ">
-            <div className=" h-full w-full  transform relative transition-all duration-1000 z-10 ">
+            <div className={`h-full w-full transform transition-all duration-1000 z-10 ${isMenuClosed ? '' : 'fixed'}`}>
+
                 <div className={isActive ? activeSide : hiddenSide}>
                     <svg
                         className="w-12 h-12 mb-2"
@@ -55,10 +69,12 @@ const BurgerMenu = () => {
 
             </div>
             <div
-                className={isActive ? normalButton : activeButton}
-                onClick={() => setIsActive(!isActive)}
+                className={`${isActive ? normalButton : activeButton} `}
+                onClick={() => handleToggle()}
             >
+                <div className="clicker">
                 &#9776;
+                </div>
             </div>
         </div>
     );
