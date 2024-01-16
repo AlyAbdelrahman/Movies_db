@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Spinner from '../../shared/spinner';
 
 const MovieCard = ({ movieData }) => {
   if (movieData) {
@@ -24,7 +25,7 @@ const MovieCard = ({ movieData }) => {
       </div>
     );
   } else {
-    return <div>Loading...</div>;
+    return (<Spinner/>);
   }
 };
 
