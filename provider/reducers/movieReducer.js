@@ -4,7 +4,8 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
     currentSearchTerm: '',
     searchResults: [],
-    searchCategory: 'movie'
+    searchCategory: 'movie',
+    isLoading: false
   };
 
   const moviesSlice = createSlice({
@@ -15,6 +16,7 @@ const initialState = {
         state.currentSearchTerm = action.payload.term;
         state.searchCategory = action.payload.searchCategory;
         state.searchResults = action.payload.results;
+        state.isLoading = action.payload.isLoading;
       },
     },
   });
