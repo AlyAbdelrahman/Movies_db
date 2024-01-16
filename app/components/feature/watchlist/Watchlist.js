@@ -50,7 +50,7 @@ const WatchList = () => {
                         {watchlist.length > 0 ? (
                             <ul>
                                 {watchlist.map((movie, index) => (
-                                        <Link  href={`movie/${movie.imdbID}`} key={index}>
+                                        <Link  href={`/movie/${movie.imdbID}`} key={index}>
                                         <div className="flex items-center mb-4 w-full hover:bg-gray-700 transition-colors duration-300">
                                             <img src={movie.Poster} alt={movie.Title} className="w-16 h-20 mr-4" />
                                             <div>

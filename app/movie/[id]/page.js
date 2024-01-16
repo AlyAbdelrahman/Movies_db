@@ -11,10 +11,12 @@ const MovieDetails = async ({params}) => {
         console.log('Movie details:', movieData);
     } catch (error) {
         console.error('Error fetching movie details:', error.message);
+    
+    return <EmptyResults/>
     }
-    const { Title, Plot, Released, imdbRating, Actors, Director, Writer, Poster } = movieData;
-
-  if (movieData?.Title) {
+    
+    if (movieData?.Title) {
+      const { Title, Plot, Released, imdbRating, Actors, Director, Writer, Poster } = movieData;
     return (
         <div className="flex flex-col md:flex-row">
         <div className="md:w-1/3">
@@ -37,8 +39,6 @@ const MovieDetails = async ({params}) => {
         </div>
       </div>
     );
-  }else{
-    <EmptyResults/>
   }
 };
 
