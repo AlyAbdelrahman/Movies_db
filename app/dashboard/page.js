@@ -18,7 +18,7 @@ export default function HomePage() {
                     (searchResults && searchResults.Search && searchResults.Search.length > 0 ? (
                         <SearchResults searchResults={searchResults.Search} />
                     ) : (
-                        currentSearchTerm && !isLoading && searchResults.Search.length ==0 ? <EmptyResults /> :   <Banner
+                        currentSearchTerm && !isLoading && searchResults?.Search.length ==0 ? <EmptyResults /> :   <Banner
                         imageUrl='/assets/background.webp'
                         movieTitle="doctor strange madness of multiverse"
                         movieCategories={['Action', 'Adventure', 'Sci-Fi']}
