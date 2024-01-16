@@ -18,19 +18,17 @@ const WatchList = () => {
                 try {
                     // Get the user document from Firestore
                     const userDocRef = doc(firestore, 'users', userData.uid);
-                    // Set up a real-time listener for changes to the watchlist
+                    // Set up a real-time listener sfor changes to the watchlist
                     const unsubscribe = onSnapshot(userDocRef, (doc) => {
                         console.log('doc.exists()', doc.exists())
                         if (doc.exists()) {
                             const user = doc.data();
-                            // Set the watchlist in the component state
                             setWatchlist(user.watchlist || []);
                             dispatch(updateUserWatchlistData({ userWatchlist: user.watchlist }));
 
                         }
                     });
 
-                    // Clean up the listener when the component unmounts
                     return () => unsubscribe();
                 } catch (error) {
                     console.error('Error fetching watchlist:', error);
@@ -38,7 +36,6 @@ const WatchList = () => {
             }
         };
 
-        // Call the fetchWatchlist function when the component mounts
         fetchWatchlist();
     }, [userData]);
 
