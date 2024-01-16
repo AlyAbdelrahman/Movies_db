@@ -4,6 +4,7 @@ import { firestore } from '@/firebase';
 import { onSnapshot, doc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserWatchlistData } from '@/provider/reducers/userReducer';
+import Link from 'next/link';
 
 const WatchList = () => {
     const [watchlist, setWatchlist] = useState([]);
@@ -49,8 +50,8 @@ const WatchList = () => {
                         {watchlist.length > 0 ? (
                             <ul>
                                 {watchlist.map((movie, index) => (
-                                    <Fragment key={index}>
-                                        <div className="flex items-center mb-4">
+                                        <Link  href={`movie/${movie.imdbID}`} key={index}>
+                                        <div className="flex items-center mb-4 w-full hover:bg-gray-700 transition-colors duration-300">
                                             <img src={movie.Poster} alt={movie.Title} className="w-16 h-20 mr-4" />
                                             <div>
                                                 <p className="text-lg font-semibold">{movie.Title}</p>
@@ -58,7 +59,7 @@ const WatchList = () => {
                                             </div>
                                         </div>
                                         {index !== watchlist.length - 1 && <hr className="border-t border-gray-300 my-4" />}
-                                    </Fragment>
+                                    </Link>
                                 ))}
                             </ul>
                         ) : (
