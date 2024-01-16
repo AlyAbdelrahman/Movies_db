@@ -1,6 +1,7 @@
 import 'dotenv/config'
 const apiKey = process.env.NEXT_PUBLIC_OMDB_API_KEY;
 const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
+const routeApi = process.env.NEXT_PUBLIC_BASE_ENV_API_URL;
 
 
 export const fetchData = async (url) => {
@@ -31,7 +32,7 @@ export const searchMovieByTitle = async (title) => {
 
 export const getMovieDetails = async (imdbID) => {
     
-    const response = await fetch(`${apiUrl}/movieDetails/${encodeURIComponent(imdbID)}`,{method:'GET'});
+    const response = await fetch(`${routeApi}/movieDetails/${encodeURIComponent(imdbID)}`,{method:'GET'});
     
       if (!response.ok) {
         throw new Error('something went wrong')

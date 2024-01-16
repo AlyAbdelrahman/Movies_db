@@ -8,15 +8,13 @@ const MovieDetails = async ({params}) => {
     let movieData;
     try {
          movieData = await getMovieDetails(id);
-        console.log('Movie details:', movieData);
     } catch (error) {
         console.error('Error fetching movie details:', error.message);
-    
-    return <EmptyResults/>
+        return <EmptyResults/>
     }
     
     if (movieData?.Title) {
-      const { Title, Plot, Released, imdbRating, Actors, Director, Writer, Poster } = movieData;
+        const { Title, Plot, Released, imdbRating, Actors, Director, Writer, Poster } = movieData;
     return (
         <div className="flex flex-col md:flex-row">
         <div className="md:w-1/3">
