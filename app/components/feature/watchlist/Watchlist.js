@@ -21,7 +21,6 @@ const WatchList = () => {
                     const userDocRef = doc(firestore, 'users', userData.uid);
                     // Set up a real-time listener sfor changes to the watchlist
                     const unsubscribe = onSnapshot(userDocRef, (doc) => {
-                        console.log('doc.exists()', doc.exists())
                         if (doc.exists()) {
                             const user = doc.data();
                             setWatchlist(user.watchlist || []);
