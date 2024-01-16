@@ -28,29 +28,13 @@ export const searchMovieByTitle = async (title) => {
   }
 };
 
-const getAllMovies = async () => {
-  const url = `${apiUrl}?apikey=${apiKey}&s=`;
-  const data = await fetchData(url);
-
-  if (data && data.Response === 'True') {
-    data.Search.forEach((movie) => {
-      console.log('Movie Title:', movie.Title);
-      console.log('Year:', movie.Year);
-      console.log('IMDb ID:', movie.imdbID);
-      console.log('Poster:', movie.Poster);
-      console.log('---');
-    });
-  } else {
-    console.error('No movies found!');
-  }
-};
 
 export const getMovieDetails = async (imdbID) => {
     
-const response = await fetch(`http://localhost:3000/api/movieDetails/${encodeURIComponent(imdbID)}`,{method:'GET'});
-
-  if (!response.ok) {
-    throw new Error('something went wrong')
-} 
-return response.json();
-};
+    const response = await fetch(`http://localhost:3000/api/movieDetails/${encodeURIComponent(imdbID)}`,{method:'GET'});
+    
+      if (!response.ok) {
+        throw new Error('something went wrong')
+    } 
+    return response.json();
+    };
