@@ -6,6 +6,7 @@ import InputField from '../../common/InputField';
 import { videoCategory } from '@/app/utils/constants';
 import Chip from '../../common/Chip';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation'
 const Search = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,8 +19,12 @@ const Search = () => {
   const [selectedCategory, setSelectedCategory] = useState('movie');
   const { currentSearchTerm } = useSelector(state => state.movies);
   const router = useRouter();
+  const pathname = usePathname()
   
   const handleSearch = async () => {
+    if (pathname.includes('/movie')) {
+      await  router.push('/dashboard')
+    }
     dispatch((prev) => updateSearchResults({ ...prev, isLoading: true }));
     if (currentSearchTerm === searchTerm) return;
     // Reset previous errors
@@ -42,7 +47,7 @@ const Search = () => {
       const apiEndpoint = `${process.env.NEXT_PUBLIC_BASE_ENV_API_URL}/movies/search`;
 
       const response = await fetch(`${apiEndpoint}?searchTerm=${encodeURIComponent(searchTerm)}&type=${selectedCategory}&season=${seasonNumber}&episode=${episodeNumber}`, { method: 'GET' });
-      const searchData = await response.json().finally( router.push('/dashboard'));
+      const searchData = await response.json();
       if (searchData.Response !== 'False' && searchData.Search.length > 0) {
         dispatch(updateSearchResults({ term: searchTerm, results: searchData || [], searchCategory: selectedCategory, isLoading: false }));
       } else {
